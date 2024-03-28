@@ -1,14 +1,14 @@
-# Build the Docker image
+steps:
+  # Build the Docker image from the Dockerfile in the repository
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/directed-bongo-401118/python-app:${SHORT_SHA}', '.']
- 
-  # Push the Docker image to Google Container Registry
+    args: ['build', '-t', 'gcr.io/directed-bongo-401118/assign2:$SHORT_SHA', '.']
+
+  # Push the built image to Google Container Registry
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/directed-bongo-401118/python-app:${SHORT_SHA}']
- 
-  # Update the Compute Engine instance with the new image
+    args: ['push', 'gcr.io/directed-bongo-401118/assign2:$SHORT_SHA']
+
+  # Update the Compute Engine instance to use the new image
   - name: 'gcr.io/cloud-builders/gcloud'
-    args: ['compute', 'instances', 'update-container', 'my-instance', '--container-image', 'directed-bongo-401118/python-app:${SHORT_SHA}', '--zone', 'us-central1-a']
- 
-images:
-  - 'gcr.io/directed-bongo-401118/my-python-app:${SHORT_SHA}'
+    args: ['compute', 'instances', 'update-container', 'kumar-instance',
+           '--zone', 'us-central1-a',
+           '--container-image', 'gcr.io/directed-bongo-401118/assign2:$SHORT_SHA']
