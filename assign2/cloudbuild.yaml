@@ -1,0 +1,20 @@
+steps:
+  # Step 1: Checkout source code from the repository
+  - name: 'gcr.io/cloud-builders/git'
+    args: ['clone', 'https://github.com/Ayush02001/lab4', '.']
+  
+  # Step 2: Build Docker image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/i-freedom-412206/agrawal-image', '.']
+  
+  # Step 3: Push Docker image to Google Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/i-freedom-412206/agrawal-image']
+  
+  # Additional steps (optional):
+  # You can add additional steps here, such as running tests or deploying your application.
+  # For example, you can use 'gcloud' commands to deploy to Google App Engine or Google Kubernetes Engine.
+
+images:
+  # Specify the Docker image(s) built by this build
+  - 'gcr.io/i-freedom-412206/agrawal-image'
